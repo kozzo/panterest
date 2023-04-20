@@ -50,7 +50,7 @@ class PinsController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('pins/create.html.twig', ['formCreate'=>$form->createView()]);
+        return $this->render('pins/create.html.twig', ['form'=>$form->createView()]);
     }
 
     #[Route('/pins/{id<[0-9]+>}/edit', name:'app_pins_edit', methods:['GET', 'PUT'])]

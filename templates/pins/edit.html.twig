@@ -4,10 +4,7 @@
 
 {% block body %}
   <h1>Modification du Pin n°{{ pin.id }}</h1>
-  {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit" value="Modifier pin" formnovalidate>
-  {{ form_end(form) }}
+  {{ include('pins/_form.html.twig', {'submitButtonText':'Modifier pin'}) }}
 
   <a href="{{ path('app_home') }}">Retour à l'index</a>
 {% endblock %}

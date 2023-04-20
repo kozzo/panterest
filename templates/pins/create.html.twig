@@ -4,10 +4,8 @@
 
 {% block body %}
   <h1>Création de pins</h1>
-  {{ form_start(formCreate) }}
-    {{ form_widget(formCreate) }}
-    <input type="submit" value="Créer pin" formnovalidate>
-  {{ form_end(formCreate) }}
+  {{ include('pins/_form.html.twig') }}
+
 
   <a href="{{ path('app_home') }}">Retour à l'index</a>
 {% endblock %}
