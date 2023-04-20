@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title 'Modification Pin n°'~pin.id %}
 
 {% block body %}
   <h1>Modification du Pin n°{{ pin.id }}</h1>
-  {{ include('pins/_form.html.twig', {'submitButtonText':'Modifier pin'}) }}
+  {{ include('layouts/partials/_form.html.twig', {'submitButtonText':'Modifier pin'}) }}
 
   <a href="{{ path('app_home') }}">Retour à l'index</a>
 {% endblock %}

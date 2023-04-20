@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title %}Nouveau Pin{% endblock %}
 
 {% block body %}
   <h1>Création de pins</h1>
-  {{ include('pins/_form.html.twig') }}
+  {{ include('layouts/partials/_form.html.twig') }}
 
 
   <a href="{{ path('app_home') }}">Retour à l'index</a>
