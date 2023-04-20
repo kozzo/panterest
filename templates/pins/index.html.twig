@@ -9,7 +9,8 @@
   {% for pin in pins %}
     <article>
       <h2><a href="pins/{{pin.id}}">{{ pin.title }}</a></h2>
-      <p>{{ pin.description }}</p>
+      <p>{{ pin.description|u.truncate(30, '...', false) }}</p>
+      <p>{{ pin.createdAt|ago }}</p>
     </article>
   {% endfor %}
 {% endblock %}
