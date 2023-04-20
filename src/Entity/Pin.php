@@ -6,6 +6,7 @@ use App\Repository\PinRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestampable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PinRepository::class)]
 #[ORM\Table(name:"pins")]
@@ -19,9 +20,13 @@ class Pin
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, minMessage:"Le titre doit contenir au moins 3 caractères.")]
+    #[Assert\NotBlank(message:"Le titre ne doit pas être vide.")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min:10, minMessage:"La description doit contenir au moins 10 caractères.")]
+    #[Assert\NotBlank(message:"La description ne doit pas être vide.")]
     private ?string $description = null;
 
     #[ORM\Column(type:"datetime_immutable", options:["default"=>"CURRENT_TIMESTAMP"])]
@@ -40,7 +45,7 @@ class Pin
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -52,7 +57,7 @@ class Pin
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
