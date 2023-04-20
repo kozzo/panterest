@@ -53,10 +53,10 @@ class PinsController extends AbstractController
         return $this->render('pins/create.html.twig', ['formCreate'=>$form->createView()]);
     }
 
-    #[Route('/pins/{id<[0-9]+>}/edit', name:'app_pins_edit', methods:['GET', 'POST'])]
+    #[Route('/pins/{id<[0-9]+>}/edit', name:'app_pins_edit', methods:['GET', 'PUT'])]
     public function edit(Request $request, EntityManagerInterface $em, Pin $pin): Response{
 
-        $form = $this   ->createForm(Pintype::class, $pin);
+        $form = $this   ->createForm(Pintype::class, $pin, ['method' => 'PUT']);
                         // ->add('title', TextType::class)
                         // ->add('description', TextareaType::class)
                         // ->getForm();
