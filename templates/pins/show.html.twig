@@ -6,6 +6,8 @@
     <article>
       <h1 class="text-center">{{ pin.title }}</h1>
       <p>{{ pin.description }}</p>
+      <p>{{ pin.imageName }}</p>
+      <img src="../public/uploads/pins/{{ pin.imageName }}" class="w-100" />
     </article>
     <a href="{{ path('app_pins_edit', {id:pin.id})}}" class="btn btn-warning">Modifier</a> | 
     <a href="#" onclick="event.preventDefault(); 

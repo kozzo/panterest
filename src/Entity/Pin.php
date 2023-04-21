@@ -7,10 +7,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestampable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: PinRepository::class)]
 #[ORM\Table(name:"pins")]
 #[ORM\HasLifecycleCallbacks]
+#[Vich\Uploadable]
 class Pin
 {
     use Timestampable;
@@ -34,6 +37,13 @@ class Pin
 
     #[ORM\Column(type:"datetime_immutable", options:["default"=>"CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
+    #[Vich\UploadableField(mapping:'pin_image', fileNameProperty:'imageName')]
+    #[Assert\Image(maxSize:"2M")]
+        private ?File $imageFile = null;
 
     public function getId(): ?int
     {
@@ -94,5 +104,29 @@ class Pin
             $this->setCreatedAt(new \DateTimeImmutable);
         }
         $this->setUpdatedAt(new \DateTimeImmutable);
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File{
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $image = null): void{
+        $this->imageFile = $image;
+
+        if($image !== null){
+            $this->setUpdatedAt(new \DateTimeImmutable);
+        }
     }
 }
