@@ -3,27 +3,26 @@
 {% block title %}Panterest{% endblock %}
 
 {% block body %}
-  <main class="container container-fluid mt-5">
-  <h1 class="text-center text-light">{{ pluralize(pins|length, 'Pin', 'Pins') }}</h1>
-  <section class="row mt-5 justify-content-evenly">
-    {% for pin in pins %}
-      <article class="card col-3 mx-1 mb-5" style="background-color:#C9C9C9;">
-        <div class="card-header">
-          <h5 class="card-title">{{ pin.title }}</a></h5>
-        </div>
-        <div class="card-body">
-          <p class="card-text">{{ pin.description|u.truncate(30, '...', false) }}</p>
-        </div>
-        <div class="card-footer row">
-          <div class="col-3">
-            <a href="pins/{{pin.id}}" class="btn btn-primary">Voir</a>
+
+    <h1 class="text-center text-light">{{ pluralize(pins|length, 'Pin', 'Pins') }}</h1>
+    <section class="row mt-5 justify-content-evenly">
+      {% for pin in pins %}
+        <article class="card col-3 mx-1 mb-5 text-dark" style="background-color:#C9C9C9;">
+          <div class="card-header">
+            <h5 class="card-title">{{ pin.title }}</a></h5>
           </div>
-          <div class="col-9">
-            <p class="text-body-secondary">{{ pin.createdAt|ago }}</p>
+          <div class="card-body">
+            <p class="card-text">{{ pin.description|u.truncate(30, '...', false) }}</p>
           </div>
-        </div>
-      </article>
-    {% endfor %}
-  </section>
-  </main>
+          <div class="card-footer row">
+            <div class="col-3">
+              <a href="pins/{{pin.id}}" class="btn btn-primary">Voir</a>
+            </div>
+            <div class="col-9">
+              <p class="text-body-secondary">{{ pin.createdAt|ago }}</p>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
 {% endblock %}

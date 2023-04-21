@@ -3,9 +3,9 @@
 {% block title %}Nouveau Pin{% endblock %}
 
 {% block body %}
-  <h1>Création de pins</h1>
-  {{ include('layouts/partials/_form.html.twig') }}
+    <h1 class="text-center">Création de pins</h1>
+    {{ include('layouts/partials/_form.html.twig') }}
 
 
-  <a href="{{ path('app_home') }}">Retour à l'index</a>
+    <a href="{{ path('app_home') }}" class="btn btn-info mt-5">Retour à l'index</a>
 {% endblock %}

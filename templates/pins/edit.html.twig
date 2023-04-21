@@ -3,8 +3,8 @@
 {% block title 'Modification Pin n°'~pin.id %}
 
 {% block body %}
-  <h1>Modification du Pin n°{{ pin.id }}</h1>
-  {{ include('layouts/partials/_form.html.twig', {'submitButtonText':'Modifier pin'}) }}
+    <h1 class="text-center">Modification du Pin n°{{ pin.id }}</h1>
+    {{ include('layouts/partials/_form.html.twig', {'submitButtonText':'Modifier pin'}) }}
 
-  <a href="{{ path('app_home') }}">Retour à l'index</a>
+    <a href="{{ path('app_home') }}" class="btn btn-info mt-5">Retour à l'index</a>
 {% endblock %}
