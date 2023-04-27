@@ -1,0 +1,22 @@
+# Documentation on how to configure the bundle can be found at: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+    filter_sets:
+        #Filtre de formulaire d'édition
+        edit_image_filter:
+            filters:
+                scale:
+                    to: 0.5
+        #Filtre de la page d'affichage de chaque pin
+        show_image_filter:
+            filters:
+                scale:
+                    to: 1
+        #Filtre des images pour la page d'accueil
+        squared_thumbnail:
+            filters:
+                thumbnail:
+                    size: [300,300]
+                    mode: outbound
+                    allow_upscale: true

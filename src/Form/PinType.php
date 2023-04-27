@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Pin;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -18,13 +19,13 @@ class PinType extends AbstractType
                 'label' => 'image (JPG ou PNG)',
                 'required' => false,
                 'allow_delete' => true,
-                'download_label' => 'Télécharger',
-                'download_uri' => true,
-                'image_uri' => true,
-                'asset_helper' => true,
+                'download_uri' => false,
+                'imagine_pattern' => 'edit_image_filter'
             ])
             ->add('title')
-            ->add('description')
+            ->add('description', TextareaType::class, [
+                    'attr' => ['rows' => '10']
+                    ])
         ;
     }
 

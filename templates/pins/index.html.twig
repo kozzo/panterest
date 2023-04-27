@@ -3,26 +3,34 @@
 {% block title %}Panterest{% endblock %}
 
 {% block body %}
-
-    <h1 class="text-center text-light">{{ pluralize(pins|length, 'Pin', 'Pins') }}</h1>
-    <section class="row mt-5 justify-content-evenly">
-      {% for pin in pins %}
-        <article class="card col-3 mx-1 mb-5 text-dark" style="background-color:#C9C9C9;">
-          <div class="card-header">
-            <h5 class="card-title">{{ pin.title }}</a></h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ pin.description|u.truncate(30, '...', false) }}</p>
-          </div>
-          <div class="card-footer row">
-            <div class="col-3">
-              <a href="pins/{{pin.id}}" class="btn btn-primary">Voir</a>
+  {% if pins|length > 0 %}
+    <h1 class="text-center text-light">{{ pluralize(pins|length, 'Pin') }}</h1>
+    {% for row in pins|batch(3) %}
+      <section class="row mt-5 justify-content-evenly">
+        {% for pin in row %}
+        <div class="col-md-4">
+          <article class="pin bg-white rounded shadow pb-1" style="background-color:#C9C9C9;">
+            <div class="mw-100 overflow-hidden">
+              <a href="{{ path('app_pins_show', { id:pin.id }) }}">
+              <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('build/images/placeholder.png'))
+                        |imagine_filter('squared_thumbnail') }}" alt="{{ pin.title }}" class="w-100 rounded-top">
+              </a>
             </div>
-            <div class="col-9">
-              <p class="text-body-secondary">{{ pin.createdAt|ago }}</p>
-            </div>
-          </div>
-        </article>
-      {% endfor %}
-    </section>
+            <h2 class="h5 pt-3 ps-3">
+              <a  href="{{ path('app_pins_show', { id:pin.id }) }}"
+                  class="text-secondary text-decoration-none">{{ pin.title }}
+              </a>
+            </h2>
+            <p class="pt-3 ps-3">{{ pin.description|u.truncate(30,'...',false) }}</p>
+            <p class="text-muted ps-3">Crée {{ pin.createdAt|ago }}</p>
+          </article>
+        </div>
+        {% endfor %}
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="h1 text-center mt-5">Pas de pins.
+      <a href="{{ path('app_pins_create') }}">Créez le premier !</a>
+    </p>
+  {% endif %}
 {% endblock %}
