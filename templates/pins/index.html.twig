@@ -22,7 +22,10 @@
               </a>
             </h2>
             <p class="pt-3 ps-3">{{ pin.description|u.truncate(30,'...',false) }}</p>
-            <p class="text-muted ps-3">Crée {{ pin.createdAt|ago }}</p>
+            <p class="text-muted ps-3">
+            Crée 
+            <time datetime="{{ pin.createdAt|date('d-m-Y H:i:s') }}">{{ pin.createdAt|ago }}</time>
+            par {{ pin.user.fullName }}</p>
           </article>
         </div>
         {% endfor %}

@@ -12,17 +12,14 @@
                       |imagine_filter('show_image_filter') }}" alt="{{ pin.title }}" class="w-100 rounded-top">
           </a>
           <h2 class="h5 pt-3 ps-3">
-            <a  href="{{ path('app_pins_show', { id:pin.id }) }}"
-                class="text-secondary text-decoration-none">{{ pin.title }}
-            </a>
+            {{ pin.title }}
           </h2>
           <p class="text-muted ps-3">
             <small>
               Crée 
               <time datetime="{{ pin.createdAt|date('d-m-Y H:i:s') }}">{{ pin.createdAt|ago }}</time>
-              par
+              par {{ pin.user.fullName }}
             </small>
-            mon q
           </p>
           <p class="px-3">{{ pin.description }}</p>
         </div>
