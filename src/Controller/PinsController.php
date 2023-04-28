@@ -38,10 +38,7 @@ class PinsController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            // $data = $form->getData();
-            // $pin = new Pin;
-            // $pin->setTitle($data['title']);
-            // $pin->setDescription($data['description']);
+            $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
             $this->addFlash('success', 'Pin créé avec succès !');

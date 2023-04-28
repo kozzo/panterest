@@ -16,6 +16,12 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: logout_message
+                csrf_token_generator: Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
