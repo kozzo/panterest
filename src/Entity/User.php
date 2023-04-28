@@ -7,12 +7,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use App\Entity\Traits\Timestampable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name:"users")]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampable;
@@ -22,6 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: "Veuillez entrer votre adresse email.")]
+    #[Assert\Email(message: "Veuillez entrer une adresse email valide.")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -34,9 +39,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez entrer un prénom.")]
+    #[Assert\Length(min:2, minMessage: "Le prénom doit contenir au moins 2 caractères.")]
     private ?string $FirstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom.")]
+    #[Assert\Length(min:2, minMessage: "Le nom doit contenir au moins 2 caractères.")]
     private ?string $LastName = null;
 
     #[ORM\Column(type:"datetime_immutable", options:["default"=>"CURRENT_TIMESTAMP"])]
@@ -47,6 +56,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Pin::class, orphanRemoval: true)]
     private Collection $pins;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -209,6 +221,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pin->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
