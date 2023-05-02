@@ -26,7 +26,7 @@
                         <label for="remember" class="form-check-label">Se souvenir de moi</label>
                     </div>
                 </div>
-                <a href="#">Mot de passe oublié</a>
+                <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="text-center mt-3">
