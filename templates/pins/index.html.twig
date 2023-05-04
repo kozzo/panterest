@@ -4,7 +4,7 @@
 
 {% block body %}
   {% if pins|length > 0 %}
-    <h1 class="text-center text-light">{{ pluralize(pins|length, 'Pin') }}</h1>
+    <h1 class="text-center text-light">{{ pluralize(number_pins, 'Pin') }}</h1>
     {% for row in pins|batch(3) %}
       <section class="row mt-5 justify-content-evenly">
         {% for pin in row %}
@@ -31,6 +31,9 @@
         {% endfor %}
       </section>
     {% endfor %}
+    <div class="pagination justify-content-center mt-5">
+      {{ knp_pagination_render(pins) }}
+    </div>
   {% else %}
     <p class="h1 text-center mt-5">Pas de pins.
       <a href="{{ path('app_pins_create') }}">Créez le premier !</a>

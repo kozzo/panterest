@@ -11,15 +11,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class PinsController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods:['GET'])]
-    public function index(PinRepository $pinRepository): Response
+    public function index(  Request $request,
+                            PinRepository $pinRepository,
+                            PaginatorInterface $paginator): Response
     {
         $pins = $pinRepository->findBy([],['createdAt' => 'DESC']);
-        return $this->render('pins/index.html.twig', compact('pins'));
+        
+        //On compte le nombre de pins
+        $number_pins = count($pins);
+        
+        //On utilise la fonction paginate de KNP Paginator pour définir le nombre de pins par page
+        $limit = $paginator->paginate($pins, $request->query->getInt('page', 1), 9);
+
+        //À l'affichage de la vue, on utilise la limite (9 par page) et le nombre de pins
+        return $this->render('pins/index.html.twig', ['pins'=>$limit, 'number_pins'=>$number_pins]);
     }
 
     #[Route('/pins/{id<[0-9]+>}', name:'app_pins_show')]
