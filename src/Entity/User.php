@@ -236,4 +236,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getGravatar(){
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->getEmail()))).'/?d='
+                .urlencode('https://fr.gravatar.com/userimage/234810535/d0b1775f9026e650a88bd8c473029ea9.png').'/&s=250';
+    }
 }

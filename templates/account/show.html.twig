@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Compte {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1 class="text-center my-5">Profil</h1>
+            <div class="text-center">
+                <img class="mb-5 rounded-circle shadow" src="{{ app.user.getGravatar() }}" alt="Mon logo">
+            </div>
+            <p class="text-center">{{ app.user.email }}</p>
+            <h2 class="text-center">{{ app.user.fullName }}</h2>
+            <p class="text-center mb-5"><small>⌛ Compte créé le {{ app.user.createdAt|date('d/m/Y') }}</small></p>
+            <p class="text-center">
+                <a href="{{ path('app_account_edit') }}">Modifier le compte</a>
+                <a href="{{ path('app_account_change_password') }}">Changer le mot de passe</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
