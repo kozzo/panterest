@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Pin;
+use App\Form\PinType;
 use App\Repository\PinRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\PinType;
 
 
 class PinsController extends AbstractController
@@ -50,6 +51,7 @@ class PinsController extends AbstractController
     }
 
     #[Route('/pins/{id<[0-9]+>}/edit', name:'app_pins_edit', methods:['GET', 'PUT'])]
+    #[Security("is_granted('PIN_MANAGE', pin)")]
     public function edit(Request $request, EntityManagerInterface $em, Pin $pin): Response{
 
         $form = $this   ->createForm(Pintype::class, $pin, ['method' => 'PUT']);
@@ -68,6 +70,7 @@ class PinsController extends AbstractController
     }
 
     #[Route('/pins/{id<[0-9]+>}/delete', name:'app_pins_delete', methods:['DELETE'])]
+    #[Security("is_granted('PIN_MANAGE', pin)")]
     public function delete(Pin $pin, Request $request, EntityManagerInterface $em): Response{
         
         if($this->isCsrfTokenValid('pins.delete'.$pin->getId(), $request->request->get('csrf_token'))){

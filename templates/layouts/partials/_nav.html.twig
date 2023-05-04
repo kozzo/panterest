@@ -10,9 +10,11 @@
           <li class="nav-item">
             <a class="nav-link fw-bold fs-6" href="{{ path('app_account') }}">{{ app.user.fullName }}</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_pins_create')}}">Nouveau Pin</a>
-          </li>
+          {% if app.user.isVerified == true %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_pins_create')}}">Nouveau Pin</a>
+            </li>
+          {% endif %}
           <li class="nav-item">
             <a  class="nav-link" 
                 href="#" 
